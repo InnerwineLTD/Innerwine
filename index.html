@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Innerwine — Wine that understands how you feel. Coming soon.">
+<title>Innerwine</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html {
+  background: #110608;
+}
+
+body {
+  width: 100%; 
+  min-height: 100vh;
+  background: #110608;
+  font-family: 'DM Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── FULL SCREEN STAGE ── */
+.stage {
+  width: 100vw;
+  min-height: 100vh;
+  background: #110608;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ── AMBIENT GLOW ── */
+.glow-1 {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -58%);
+  width: 520px; height: 520px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(194,48,60,0.16) 0%, rgba(130,20,36,0.07) 45%, transparent 70%);
+  pointer-events: none;
+}
+
+.glow-2 {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -58%);
+  width: 280px; height: 280px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(196,160,80,0.07) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+/* ── BOKEH ── */
+.bokeh {
+  position: absolute;
+  border-radius: 50%;
+  background: #C4A050;
+  pointer-events: none;
+  animation: bokehFloat linear infinite;
+}
+
+@keyframes bokehFloat {
+  0%   { transform: translateY(0) scale(1); opacity: 0; }
+  15%  { opacity: 1; }
+  85%  { opacity: 0.5; }
+  100% { transform: translateY(-100px) scale(0.5); opacity: 0; }
+}
+
+/* ── CONTENT ── */
+.content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 0 32px;
+  gap: 0;
+}
+
+/* ── BRAND MARK ── */
+.mark {
+  margin-bottom: 40px;
+  filter: drop-shadow(0 0 32px rgba(194,48,60,0.32)) drop-shadow(0 0 70px rgba(194,48,60,0.10));
+  animation: markIn 1.4s cubic-bezier(0.16,1,0.3,1) both;
+}
+
+@keyframes markIn {
+  from { opacity: 0; transform: scale(0.88) translateY(10px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.ring-outer { animation: ringRotate 120s linear infinite; transform-origin: 60px 60px; }
+.ring-mid   { animation: ringRotate 80s linear infinite reverse; transform-origin: 60px 60px; }
+
+@keyframes ringRotate {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* ── HEADLINE ── */
+.headline {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 400;
+  font-size: clamp(42px, 10vw, 80px);
+  line-height: 1.05;
+  letter-spacing: 0.01em;
+  color: #F0E2CA;
+  margin-bottom: 44px;
+  opacity: 0;
+  animation: fadeUp 1s cubic-bezier(0.16,1,0.3,1) 0.3s forwards;
+  max-width: 640px;
+}
+
+.headline em {
+  font-style: italic;
+  color: #D94055;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── COMING SOON PILL ── */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 28px;
+  border: 1px solid rgba(196,160,80,0.45);
+  border-radius: 40px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 300;
+  letter-spacing: 0.12em;
+  color: rgba(196,160,80,0.92);
+  opacity: 0;
+  animation: fadeUp 1s cubic-bezier(0.16,1,0.3,1) 0.55s forwards;
+}
+
+.pill-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: #D94055;
+  animation: dotPulse 2.2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+@keyframes dotPulse {
+  0%, 100% { opacity: 0.35; transform: scale(0.75); }
+  50%       { opacity: 1;    transform: scale(1.15); }
+}
+
+
+</style>
+</head>
+<body>
+
+<div class="stage">
+  <div class="glow-1"></div>
+  <div class="glow-2"></div>
+
+  <div class="content">
+
+    <!-- Brand mark — outer segmented arcs + glass, no gold drop -->
+    <div class="mark">
+      <svg viewBox="0 0 120 120" width="120" height="120">
+        <!-- Outer segmented arcs -->
+        <g class="ring-outer">
+          <path d="M 60 6 A 54 54 0 0 1 99.8 27.2" fill="none" stroke="#C23B4C" stroke-width="3.5" stroke-linecap="round"/>
+          <path d="M 99.8 27.2 A 54 54 0 0 1 114 60"  fill="none" stroke="#A03248" stroke-width="3.5" stroke-linecap="round"/>
+          <path d="M 114 60 A 54 54 0 0 1 99.8 92.8"  fill="none" stroke="#AF9364" stroke-width="3.5" stroke-linecap="round"/>
+          <path d="M 99.8 92.8 A 54 54 0 0 1 60 106"  fill="none" stroke="#8A1726" stroke-width="3.5" stroke-linecap="round"/>
+          <path d="M 60 106 A 54 54 0 0 1 20.2 92.8"  fill="none" stroke="#E23D5B" stroke-width="3.5" stroke-linecap="round"/>
+          <path d="M 20.2 92.8 A 54 54 0 0 1 6 60"    fill="none" stroke="#7A1020" stroke-width="3.5" stroke-linecap="round"/>
+          <path d="M 6 60 A 54 54 0 0 1 20.2 27.2"    fill="none" stroke="#C4A050" stroke-width="3.5" stroke-linecap="round"/>
+          <path d="M 20.2 27.2 A 54 54 0 0 1 60 6"    fill="none" stroke="#A03642" stroke-width="3.5" stroke-linecap="round"/>
+        </g>
+        <!-- Middle dashed ring -->
+        <circle class="ring-mid" cx="60" cy="60" r="44"
+          fill="none" stroke="#BC425B" stroke-width="1.5"
+          stroke-dasharray="5 4" opacity="0.45"/>
+        <!-- Inner ring -->
+        <circle cx="60" cy="60" r="34"
+          fill="none" stroke="#A0394E" stroke-width="1"
+          opacity="0.28"/>
+        <!-- Wine glass outline -->
+        <path d="M 44 32 Q 42 50 46 60 Q 50 70 60 73 Q 70 70 74 60 Q 78 50 76 32 Z"
+          fill="none" stroke="#E8D5B8" stroke-width="1.6" stroke-linejoin="round"/>
+        <line x1="60" y1="73" x2="60" y2="87" stroke="#E8D5B8" stroke-width="1.6" stroke-linecap="round"/>
+        <line x1="51" y1="87" x2="69" y2="87" stroke="#E8D5B8" stroke-width="1.6" stroke-linecap="round"/>
+        <!-- Wine fill -->
+        <path d="M 48 56 Q 47 63 49 67 Q 53 73 60 74 Q 67 73 71 67 Q 73 63 72 56 Z"
+          fill="#C23B4C" opacity="0.55"/>
+        <!-- No gold drop -->
+      </svg>
+    </div>
+
+    <!-- Headline only -->
+    <h1 class="headline">
+      Wine that understands<br><em>how you feel.</em>
+    </h1>
+
+    <!-- Coming soon pill -->
+    <div class="pill">
+      <span class="pill-dot"></span>
+      Coming soon
+    </div>
+
+  </div>
+
+
+</div>
+
+<script>
+// Bokeh particles
+(function() {
+  const stage = document.querySelector('.stage');
+  for (let i = 0; i < 16; i++) {
+    const b = document.createElement('div');
+    b.className = 'bokeh';
+    const size = Math.random() * 2.5 + 1;
+    b.style.cssText = `
+      width:${size}px; height:${size}px;
+      left:${Math.random() * 100}%;
+      top:${10 + Math.random() * 80}%;
+      opacity:${Math.random() * 0.35 + 0.08};
+      animation-duration:${7 + Math.random() * 9}s;
+      animation-delay:${Math.random() * 9}s;
+    `;
+    stage.appendChild(b);
+  }
+})();
+</script>
+
+</body>
+</html>
